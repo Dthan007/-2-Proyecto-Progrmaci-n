@@ -1,4 +1,5 @@
 import socket
+from bitacora import registrar
 
 def construir_trama_salida(numero_factura, fecha_venta, productos):
     """
@@ -34,9 +35,12 @@ def construir_trama_salida(numero_factura, fecha_venta, productos):
 
 def enviar_salida_almacen(host, port, numero_factura, fecha_venta, productos):
     trama = construir_trama_salida(numero_factura, fecha_venta, productos)
+    registrar(trama, "envio_almacen")
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as cliente:
         cliente.connect((host, port))
         cliente.sendall(trama.encode("utf-8"))
         respuesta = cliente.recv(4096)
-        return respuesta.decode("utf-8")
+        texto_respuesta = respuesta.decode("utf-8")
+        registrar (texto_respuesta, "respuesta_almacen")
+        return texto_respuesta

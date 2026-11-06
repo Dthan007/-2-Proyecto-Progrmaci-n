@@ -22,7 +22,7 @@ def manejar_cliente(conexion, direccion, conexion_bd):
 
         try:
             trama = json.loads(datos.decode("utf-8")) #Convierte el JSON a diccionario Python
-            registrar(trama)
+            registrar(trama, "entrada")
             historia = trama.get("historia")
 
             if historia == "VERIFICADOR2":
@@ -36,6 +36,7 @@ def manejar_cliente(conexion, direccion, conexion_bd):
             print("ERROR GENERAL:", error)
             respuesta = {"status": "4"}
 
+        registrar(respuesta, "salida")
         conexion.sendall(json.dumps(respuesta).encode("utf-8"))
 
 def iniciar_servidor(host, port, conexion_bd):

@@ -16,9 +16,14 @@ def procesar_cola(ruta_archivo):
             archivo.write(entrada + "\n")
         cola_bitacora.task_done()
 
-def registrar(trama):
-    fecha_hora = datetime.now().strftime("%d/%m/%y %H:%M:%S")
-    linea = fecha_hora + ": " + json.dumps(trama)
-    cola_bitacora.put(linea)
+
+"""nuevo"""
+def registrar (trama, movimiento):
+    registro = {
+        "fecha": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+        "movimiento": movimiento,
+        "detalle": trama,
+    }
+    cola_bitacora.put(json.dumps(registro, ensure_ascii=False))
 
     
