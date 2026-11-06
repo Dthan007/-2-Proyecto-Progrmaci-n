@@ -1,29 +1,31 @@
-﻿using System;
+﻿using BLL;
+using Entities;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 
-// NOTA: puede usar el comando "Rename" del menú "Refactorizar" para cambiar el nombre de clase "Service1" en el código, en svc y en el archivo de configuración.
 public class Service : IService
 {
-	public string GetData(int value)
-	{
-		return string.Format("You entered: {0}", value);
-	}
+    public RespuestaServicio MantenimientoCliente(SolicitudCliente solicitud)
+    {
+        return CrearVerificador().MantenimientoCliente(solicitud);
+    }
 
-	public CompositeType GetDataUsingDataContract(CompositeType composite)
-	{
-		if (composite == null)
-		{
-			throw new ArgumentNullException("composite");
-		}
-		if (composite.BoolValue)
-		{
-			composite.StringValue += "Suffix";
-		}
-		return composite;
-	}
+    public RespuestaServicio RegistrarCompra(SolicitudCompra solicitud)
+    {
+        return CrearVerificador().RegistrarCompra(solicitud);
+    }
+
+    private VerificadorBLL CrearVerificador()
+    {
+        var ip = ConfigurationManager.AppSettings["IpVerificador"];
+        var puerto = int.Parse(ConfigurationManager.AppSettings["PuertoVerificador"]);
+
+        return new VerificadorBLL(ip, puerto);
+    }
 }
