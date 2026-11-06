@@ -4,7 +4,7 @@ import Entity.NuevaCompra;
 import Entity.DetalleCompra;
 
 import com.microsoft.sqlserver.jdbc.SQLServerCallableStatement;
-import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
+import microsoft.sqlserver.jdbc.SQLServerDataTable;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
