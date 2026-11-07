@@ -5,12 +5,8 @@ HOST = "0.0.0.0"
 PUERTO = 5000
 
 def construir_respuesta_para(trama):
-    codigos_producto = []
-    posicion = 21
-    while posicion + 17 <= len(trama):
-        codigo = trama[posicion:posicion + 10]
-        codigos_producto.append(codigo)
-        posicion += 17
+    campos = trama.split("|")
+    codigos_producto = campos[4::2]
 
     if "8888888888" in codigos_producto:
         return "PRODUCTO INVALIDO"
