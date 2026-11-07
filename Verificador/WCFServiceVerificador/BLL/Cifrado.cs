@@ -37,20 +37,20 @@ namespace BLL
             {
                 aes.Key = Clave;
 
-                int tamañoIv = aes.BlockSize / 8;
+                int tamanoIv = aes.BlockSize / 8;
                 
-                if (todo.Length <= tamañoIv)
+                if (todo.Length <= tamanoIv)
                 {
                     throw new FormatException("El texto cifrado es demasiado corto");
                 }
 
-                byte[] iv = new byte[tamañoIv];
-                Buffer.BlockCopy(todo, 0, iv, 0, tamañoIv);
+                byte[] iv = new byte[tamanoIv];
+                Buffer.BlockCopy(todo, 0, iv, 0, tamanoIv);
                 aes.IV = iv;
 
                 using (var desencriptador = aes.CreateDecryptor())
                 {
-                    byte[] datos = desencriptador.TransformFinalBlock(todo, tamañoIv, todo.Length - tamañoIv);
+                    byte[] datos = desencriptador.TransformFinalBlock(todo, tamanoIv, todo.Length - tamanoIv);
                     return Encoding.UTF8.GetString(datos);
                 }
             }

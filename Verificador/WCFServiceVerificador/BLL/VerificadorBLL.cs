@@ -25,7 +25,7 @@ namespace BLL
             this.puerto = puerto;
         }
 
-        public RespuestaServicio MantenimientoCLiente(SolicitudCliente solicitud)
+        public RespuestaServicio MantenimientoCliente(SolicitudCliente solicitud)
         {
             if (solicitud == null)
             {
