@@ -32,9 +32,16 @@ namespace BLL
                 return Fallo(PrefijoClientes, "No se recibieron datos.");
             }
 
+            var tipo = (solicitud.TipoTransaccion ?? "").Trim().ToLower();
+
+            if (tipo != "agregar" && tipo != "modificar" && tipo != "borrar")
+            {
+                return Fallo(PrefijoClientes, "Tipo de transaccion invalida");
+            }
+
             var trama = new
             {
-                tipo_transaccion = (solicitud.TipoTransaccion ?? "").Trim().ToLower(),
+                tipo_transaccion = tipo,
                 identificacion = solicitud.Identificacion,
                 pais_origen = solicitud.PaisOrigen,
                 nombre = solicitud.Nombre,
