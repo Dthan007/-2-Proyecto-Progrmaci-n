@@ -1,30 +1,23 @@
+
 package DAL;
 
 import Entity.NuevoProveedor;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 
-public class ProveedorDAL
-{
-    private final String url =
-        "jdbc:sqlserver://localhost:1433;" +
-        "databaseName=Almacen;" +
-        "encrypt=false;" +
-        "trustServerCertificate=true;" +
-        "integratedSecurity=true";
+public class ProveedorDAL {
 
-    public String insertarProveedor(NuevoProveedor proveedor)
-    {
+    public String insertarProveedor(NuevoProveedor proveedor) {
+
         String sql = "{CALL SP_InsertarProveedor(?, ?, ?, ?, ?, ?, ?)}";
 
-        try
-        (
-            Connection conexion = DriverManager.getConnection(url);
+        try (
+            Connection conexion = ConexionSQL.conectar();
             CallableStatement comando = conexion.prepareCall(sql)
-        )
-        {
+        ) {
+
             comando.setString(1, proveedor.getIDJuridica());
             comando.setInt(2, proveedor.getTipoTransaccion());
             comando.setString(3, proveedor.getNombreEmpresa());
@@ -33,52 +26,58 @@ public class ProveedorDAL
             comando.setString(6, proveedor.getCorreo());
             comando.setInt(7, proveedor.getEstado());
 
-            ResultSet resultado = comando.executeQuery();
+            try (ResultSet resultado = comando.executeQuery()) {
 
-            if (resultado.next())
-            {
-                return resultado.getString("Resultado");
+                if (resultado.next()) {
+                    return resultado.getString("Resultado");
+                }
             }
 
             return "ERROR";
-        }
-        catch (Exception e)
-        {
-            System.out.println("Error al insertar proveedor: " + e.getMessage());
+
+        } catch (Exception e) {
+
+            System.out.println(
+                "Error al insertar proveedor: " + e.getMessage()
+            );
+
             return "ERROR";
         }
     }
 
-    public ResultSet consultarProveedor(String idJuridica)
-    {
+    public ResultSet consultarProveedor(String idJuridica) {
+
         String sql = "{CALL SP_ConsultarProveedor(?)}";
 
-        try
-        {
-            Connection conexion = DriverManager.getConnection(url);
+        try {
+
+            Connection conexion = ConexionSQL.conectar();
+
             CallableStatement comando = conexion.prepareCall(sql);
 
             comando.setString(1, idJuridica);
 
             return comando.executeQuery();
-        }
-        catch (Exception e)
-        {
-            System.out.println("Error al consultar proveedor: " + e.getMessage());
+
+        } catch (Exception e) {
+
+            System.out.println(
+                "Error al consultar proveedor: " + e.getMessage()
+            );
+
             return null;
         }
     }
 
-    public String modificarProveedor(NuevoProveedor proveedor)
-    {
+    public String modificarProveedor(NuevoProveedor proveedor) {
+
         String sql = "{CALL SP_ModificarProveedor(?, ?, ?, ?, ?, ?)}";
 
-        try
-        (
-            Connection conexion = DriverManager.getConnection(url);
+        try (
+            Connection conexion = ConexionSQL.conectar();
             CallableStatement comando = conexion.prepareCall(sql)
-        )
-        {
+        ) {
+
             comando.setString(1, proveedor.getIDJuridica());
             comando.setString(2, proveedor.getNombreEmpresa());
             comando.setString(3, proveedor.getNombreContacto());
@@ -86,19 +85,22 @@ public class ProveedorDAL
             comando.setString(5, proveedor.getCorreo());
             comando.setInt(6, proveedor.getEstado());
 
-            ResultSet resultado = comando.executeQuery();
+            try (ResultSet resultado = comando.executeQuery()) {
 
-            if (resultado.next())
-            {
-                return resultado.getString("Resultado");
+                if (resultado.next()) {
+                    return resultado.getString("Resultado");
+                }
             }
 
             return "ERROR";
-        }
-        catch (Exception e)
-        {
-            System.out.println("Error al modificar proveedor: " + e.getMessage());
+
+        } catch (Exception e) {
+
+            System.out.println(
+                "Error al modificar proveedor: " + e.getMessage()
+            );
+
             return "ERROR";
         }
-    }//modificarProveedor.
-}//ProveedorDAL.
+    }
+}

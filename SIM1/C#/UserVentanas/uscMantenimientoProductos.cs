@@ -1,4 +1,6 @@
-﻿namespace Sistema_de_Ventas_y_Distribución
+﻿using System.Globalization;
+
+namespace Sistema_de_Ventas_y_Distribución
 {
     public partial class uscMantenimientoProductos : UserControl
     {
@@ -9,20 +11,36 @@
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            string trama =
-                "PRODUCTO|" +
-                cmbTipoTransaccion.SelectedIndex + "|" +
-                txtNoProducto.Text + "|" +
-                txtNombre.Text + "|" +
-                txtPrecio.Text;
+            int tipoTransaccion = cmbTipoTransaccion.SelectedIndex;
+            string numeroProducto = txtNoProducto.Text;
+            string nombreProducto = txtNombre.Text;
 
-            BLL.EnviarConsulta productoBLL = new BLL.EnviarConsulta();
-            string respuesta = productoBLL.ProcesarElemento(trama);
+            if (!double.TryParse(
+                txtPrecio.Text,
+                NumberStyles.Any,
+                CultureInfo.InvariantCulture,
+                out double precio))
+            {
+                MessageBox.Show("El precio no es válido.");
+                return;
+            }
+            
+            BLL.AlmacenServiceBLL productoBLL = new BLL.AlmacenServiceBLL();
 
-            MessageBox.Show(respuesta, "Respuesta del Servidor", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var respuesta = productoBLL.MantenimientoProducto(
+                tipoTransaccion,
+                numeroProducto,
+                nombreProducto,
+                precio
+            );
 
-            LimpiarCampos();
-
+            MessageBox.Show(
+                respuesta.Mensaje,
+                "Respuesta del Servidor",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+            //LimpiarCampos();
         }//btnAceptar_Click().
 
         public void LimpiarCampos()

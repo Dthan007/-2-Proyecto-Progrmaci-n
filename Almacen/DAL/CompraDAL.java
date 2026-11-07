@@ -1,3 +1,4 @@
+
 package DAL;
 
 import Entity.NuevaCompra;
@@ -7,44 +8,33 @@ import com.microsoft.sqlserver.jdbc.SQLServerCallableStatement;
 import com.microsoft.sqlserver.jdbc.SQLServerDataTable;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class CompraDAL
-{
-    private final String url =
-        "jdbc:sqlserver://localhost:1433;" +
-        "databaseName=Almacen;" +
-        "encrypt=false;" +
-        "trustServerCertificate=true;" +
-        "integratedSecurity=true";
+public class CompraDAL {
 
-    public String insertarCompra(NuevaCompra compra)
-    {
+    public String insertarCompra(NuevaCompra compra) {
+
         String sql = "{CALL SP_InsertarCompra(?, ?, ?, ?)}";
 
-        try
-        (
-            Connection conexion = DriverManager.getConnection(url);
+        try (
+            Connection conexion = ConexionSQL.conectar();
             CallableStatement comando =
                 conexion.prepareCall(sql)
-        )
-        {
+        ) {
+
             DateTimeFormatter formato =
                 DateTimeFormatter.ofPattern("yyyyMMdd");
 
             LocalDate fecha =
                 LocalDate.parse(compra.getFechaCompra(), formato);
 
-            Date fechaSQL =
-                Date.valueOf(fecha);
+            Date fechaSQL = Date.valueOf(fecha);
 
-            SQLServerDataTable detalles =
-                new SQLServerDataTable();
+            SQLServerDataTable detalles = new SQLServerDataTable();
 
             detalles.addColumnMetadata(
                 "NoProducto",
@@ -56,8 +46,8 @@ public class CompraDAL
                 java.sql.Types.INTEGER
             );
 
-            for (DetalleCompra detalle : compra.getDetalles())
-            {
+            for (DetalleCompra detalle : compra.getDetalles()) {
+
                 detalles.addRow(
                     detalle.getNoProducto(),
                     detalle.getCantidad()
@@ -77,19 +67,18 @@ public class CompraDAL
                 detalles
             );
 
-            ResultSet resultado =
-                comando.executeQuery();
+            try (ResultSet resultado = comando.executeQuery()) {
 
-            if (resultado.next())
-            {
-                return resultado.getString("Resultado");
+                if (resultado.next()) {
+                    return resultado.getString("Resultado");
+                }
             }
 
             return "ERROR: El procedimiento no devolvió respuesta.";
-        }
-        catch (Exception e)
-        {
+
+        } catch (Exception e) {
+
             return "ERROR: " + e.getMessage();
         }
-    }//insertarCompra.
-}//CompraDAL.
+    }
+}
