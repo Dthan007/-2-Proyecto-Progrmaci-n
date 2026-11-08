@@ -1,5 +1,4 @@
-﻿using System;
-using AlmacenServiceReference;
+﻿using AlmacenServiceReference;
 
 namespace BLL
 {

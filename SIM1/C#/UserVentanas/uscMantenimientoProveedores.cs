@@ -1,4 +1,6 @@
-﻿namespace Sistema_de_Ventas_y_Distribución.UserVentanas
+﻿using System.Globalization;
+
+namespace Sistema_de_Ventas_y_Distribución.UserVentanas
 {
     public partial class uscMantenimientoProveedores : UserControl
     {
@@ -9,21 +11,31 @@
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            string trama =
-                "PROVEEDOR|" +
-                cmbTipoTransaccion.SelectedIndex + "|" +
-                txtIDjuridica.Text + "|" +
-                txtNombre.Text + "|" +
-                txtNomContacto.Text + "|" +
-                txtTelefono.Text + "|" +
-                txtCorreo.Text + "|" +
-                cmbEstado.SelectedIndex;
+            int tipoTransaccion = cmbTipoTransaccion.SelectedIndex;
+            string idJuridica = txtIDjuridica.Text;
+            string nombreproveedor = txtNombre.Text;
+            string nombreContacto = txtNomContacto.Text;
+            string telefono = txtTelefono.Text;
+            string correo = txtCorreo.Text;
+            int estado = cmbEstado.SelectedIndex;
 
-            BLL.EnviarConsulta proveedorBLL = new BLL.EnviarConsulta();
-            string respuesta = proveedorBLL.ProcesarElemento(trama);
+            BLL.ProveedorServiceBLL proveedorBLL = new BLL.ProveedorServiceBLL();
 
-            MessageBox.Show(respuesta, "Respuesta del Servidor", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+            var respuesta = proveedorBLL.MantenimientoProveedores(
+                tipoTransaccion,
+                idJuridica,
+                nombreproveedor,
+                nombreContacto,
+                telefono,
+                correo,
+                estado
+            );
+            MessageBox.Show(
+                respuesta.Mensaje,
+                "Respuesta del Servidor",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
             LimpiarCampos();
         }
 

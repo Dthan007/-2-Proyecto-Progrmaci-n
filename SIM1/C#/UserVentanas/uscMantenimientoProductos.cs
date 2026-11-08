@@ -40,7 +40,7 @@ namespace Sistema_de_Ventas_y_Distribución
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information
             );
-            //LimpiarCampos();
+            LimpiarCampos();
         }//btnAceptar_Click().
 
         public void LimpiarCampos()

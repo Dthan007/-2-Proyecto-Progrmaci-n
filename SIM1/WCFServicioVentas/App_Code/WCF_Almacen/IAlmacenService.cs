@@ -10,5 +10,4 @@ public interface IAlmacenService
         string nombreProducto,
         double precio
     );
-
 }

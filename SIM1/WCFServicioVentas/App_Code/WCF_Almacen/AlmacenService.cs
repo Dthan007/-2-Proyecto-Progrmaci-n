@@ -1,7 +1,6 @@
 ﻿using BLL;
 using System;
 using System.Globalization;
-using System.ServiceModel;
 
 public class AlmacenService : IAlmacenService
 {
