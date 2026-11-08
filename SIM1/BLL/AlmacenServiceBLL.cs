@@ -2,6 +2,7 @@
 
 namespace BLL
 {
+    //prueba
     public class AlmacenServiceBLL
     {
         public RespuestaAlmacen MantenimientoProducto(
