@@ -1,5 +1,7 @@
 <Solution>
   <Project Path="../BLL/BLL.csproj" Id="b8103f02-6dc9-40ed-9756-11949dc3be83" />
+  <Project Path="../Servicios/ServiciosBLL/ServiciosBLL.csproj" Id="7ee62ef7-8470-412f-8474-473f7ecfd0ed" />
+  <Project Path="../Servicios/ServiciosEntities/ServiciosEntities.csproj" Id="6b2e2777-ceab-47fb-9c6f-f4b1861aef96" />
   <Project Path="../WCFServicioVentas/" Type="Website" DisplayName="WCFServicioVentas">
     <BuildType Project="Debug" />
     <Properties Name="WebsiteProperties">
@@ -11,6 +13,7 @@
       <Property Name="Debug.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
       <Property Name="Debug.AspNetCompiler.VirtualPath" Value="&quot;/localhost_50893&quot;" />
       <Property Name="DefaultWebSiteLanguage" Value="&quot;Visual C#&quot;" />
+      <Property Name="ProjectReferences" Value="&quot;{7ee62ef7-8470-412f-8474-473f7ecfd0ed}|ServiciosBLL.dll;{6b2e2777-ceab-47fb-9c6f-f4b1861aef96}|ServiciosEntities.dll;&quot;" />
       <Property Name="Release.AspNetCompiler.Debug" Value="&quot;False&quot;" />
       <Property Name="Release.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
       <Property Name="Release.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />

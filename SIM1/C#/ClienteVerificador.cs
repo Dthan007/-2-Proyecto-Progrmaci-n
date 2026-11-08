@@ -6,7 +6,7 @@ namespace Sistema_de_Ventas_y_Distribución
 {
     public static class ClienteVerificador
     {
-        private const string Direccion = "http://localhost:62854/Service.svc";
+        private const string Direccion = "http://localhost:50893/VerificadorService.svc";
 
         public static RespuestaServicio MantenimientoCliente(SolicitudCliente solicitud)
         {
@@ -18,9 +18,9 @@ namespace Sistema_de_Ventas_y_Distribución
             return Ejecutar(cliente => cliente.RegistrarCompra(solicitud));
         }
 
-        private static RespuestaServicio Ejecutar(Func<ServiceClient, RespuestaServicio> operacion)
+        private static RespuestaServicio Ejecutar(Func<VerificadorServiceClient, RespuestaServicio> operacion)
         {
-            var cliente = new ServiceClient(ServiceClient.EndpointConfiguration.BasicHttpBinding_IService, Direccion);
+            var cliente = new VerificadorServiceClient(VerificadorServiceClient.EndpointConfiguration.BasicHttpBinding_IVerificadorService, Direccion);
 
             try
             {
