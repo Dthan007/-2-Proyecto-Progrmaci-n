@@ -1,4 +1,5 @@
 ﻿using BLL;
+using Entities;
 using System;
 using System.Globalization;
 
@@ -6,7 +7,7 @@ public class AlmacenProveedor : IAlmacenProveedor
 {
     
 
-    public RespuestaAlmacen MantenimientoProveedor(
+    public RespuestaServicio MantenimientoProveedor(
         int tipoTransaccion,
         string IDjuridica,
         string nombreProveedor,
@@ -28,7 +29,7 @@ public class AlmacenProveedor : IAlmacenProveedor
         ConexionSocket socket = new ConexionSocket("127.0.0.1", 5000);
         if (!socket.Conectar())
         {
-            return new RespuestaAlmacen
+            return new RespuestaServicio
             {
                 Resultado = false,
                 Mensaje = "No se pudo conectar con Almacén."
@@ -40,7 +41,7 @@ public class AlmacenProveedor : IAlmacenProveedor
             bool exitoso = respuesta.Trim().Equals("EXITOSO",
                 StringComparison.OrdinalIgnoreCase);
 
-            return new RespuestaAlmacen
+            return new RespuestaServicio
             {
                 Resultado = exitoso,
                 Mensaje = exitoso

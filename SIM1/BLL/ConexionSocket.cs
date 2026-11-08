@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using System;
+using System.Net.Sockets;
 using System.Text;
 
 namespace BLL
@@ -28,8 +29,9 @@ namespace BLL
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Consola.Error("No se pudo conectar a " + ipServidor + ":" + puertoServidor + " ", ex);
                 Desconectar();
                 return false;
             }
@@ -64,6 +66,7 @@ namespace BLL
             }
             catch (Exception ex)
             {
+                Consola.Error("Fallo el envio o la recepcion con el verificador ", ex);
                 return "ERROR: " + ex.Message;
             }
         }

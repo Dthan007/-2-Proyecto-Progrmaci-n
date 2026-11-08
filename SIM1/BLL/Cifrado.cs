@@ -1,5 +1,6 @@
-﻿using System.Text;
+﻿using System;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace BLL
 {
@@ -9,19 +10,50 @@ namespace BLL
 
         public static string Cifrar(string textoPlano)
         {
-            using var aes = Aes.Create();
-            aes.Key = Clave;
-            aes.GenerateIV();
+            using (var aes = Aes.Create())
+            {
+                aes.Key = Clave;
+                aes.GenerateIV();
 
-            using var encriptador = aes.CreateEncryptor();
-            byte[] datos = Encoding.UTF8.GetBytes(textoPlano);
-            byte[] cifrado = encriptador.TransformFinalBlock(datos, 0, datos.Length);
+                using (var encriptador = aes.CreateEncryptor())
+                {
+                    byte[] datos = Encoding.UTF8.GetBytes(textoPlano);
+                    byte[] cifrado = encriptador.TransformFinalBlock(datos, 0, datos.Length);
 
-            byte[] resultado = new byte[aes.IV.Length + cifrado.Length];
-            Buffer.BlockCopy(aes.IV, 0, resultado, 0, aes.IV.Length);
-            Buffer.BlockCopy(cifrado, 0, resultado, aes.IV.Length, cifrado.Length);
+                    byte[] resultado = new byte[aes.IV.Length + cifrado.Length];
+                    Buffer.BlockCopy(aes.IV, 0, resultado, 0, aes.IV.Length);
+                    Buffer.BlockCopy(cifrado, 0, resultado, aes.IV.Length, cifrado.Length);
 
-            return Convert.ToBase64String(resultado);
+                    return Convert.ToBase64String(resultado);
+                }
+            }  
+        }
+
+        public static string Descifrar (string textoCifrado)
+        {
+            byte[] todo = Convert.FromBase64String(textoCifrado);
+
+            using (var aes = Aes.Create())
+            {
+                aes.Key = Clave;
+
+                int tamanoIv = aes.BlockSize / 8;
+                
+                if (todo.Length <= tamanoIv)
+                {
+                    throw new FormatException("El texto cifrado es demasiado corto");
+                }
+
+                byte[] iv = new byte[tamanoIv];
+                Buffer.BlockCopy(todo, 0, iv, 0, tamanoIv);
+                aes.IV = iv;
+
+                using (var desencriptador = aes.CreateDecryptor())
+                {
+                    byte[] datos = desencriptador.TransformFinalBlock(todo, tamanoIv, todo.Length - tamanoIv);
+                    return Encoding.UTF8.GetString(datos);
+                }
+            }
         }
     }
 }
