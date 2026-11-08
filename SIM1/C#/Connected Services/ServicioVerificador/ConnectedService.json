@@ -1,7 +1,7 @@
 {
   "ExtendedData": {
     "inputs": [
-      "http://localhost:62854/Service.svc?wsdl"
+      "http://localhost:50893/VerificadorService.svc?wsdl"
     ],
     "collectionTypes": [
       "System.Array",

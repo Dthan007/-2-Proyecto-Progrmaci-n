@@ -356,25 +356,25 @@ namespace ServicioVerificador
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServicioVerificador.IService")]
-    public interface IService
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServicioVerificador.IVerificadorService")]
+    public interface IVerificadorService
     {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/MantenimientoCliente", ReplyAction="http://tempuri.org/IService/MantenimientoClienteResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVerificadorService/MantenimientoCliente", ReplyAction="http://tempuri.org/IVerificadorService/MantenimientoClienteResponse")]
         ServicioVerificador.RespuestaServicio MantenimientoCliente(ServicioVerificador.SolicitudCliente solicitud);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService/RegistrarCompra", ReplyAction="http://tempuri.org/IService/RegistrarCompraResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVerificadorService/RegistrarCompra", ReplyAction="http://tempuri.org/IVerificadorService/RegistrarCompraResponse")]
         ServicioVerificador.RespuestaServicio RegistrarCompra(ServicioVerificador.SolicitudCompra solicitud);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    public interface IServiceChannel : ServicioVerificador.IService, System.ServiceModel.IClientChannel
+    public interface IVerificadorServiceChannel : ServicioVerificador.IVerificadorService, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    public partial class ServiceClient : System.ServiceModel.ClientBase<ServicioVerificador.IService>, ServicioVerificador.IService
+    public partial class VerificadorServiceClient : System.ServiceModel.ClientBase<ServicioVerificador.IVerificadorService>, ServicioVerificador.IVerificadorService
     {
         
         /// <summary>
@@ -384,35 +384,35 @@ namespace ServicioVerificador
         /// <param name="clientCredentials">Credenciales de cliente</param>
         static partial void ConfigureEndpoint(System.ServiceModel.Description.ServiceEndpoint serviceEndpoint, System.ServiceModel.Description.ClientCredentials clientCredentials);
         
-        public ServiceClient() : 
-                base(ServiceClient.GetDefaultBinding(), ServiceClient.GetDefaultEndpointAddress())
+        public VerificadorServiceClient() : 
+                base(VerificadorServiceClient.GetDefaultBinding(), VerificadorServiceClient.GetDefaultEndpointAddress())
         {
-            this.Endpoint.Name = EndpointConfiguration.BasicHttpBinding_IService.ToString();
+            this.Endpoint.Name = EndpointConfiguration.BasicHttpBinding_IVerificadorService.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
         
-        public ServiceClient(EndpointConfiguration endpointConfiguration) : 
-                base(ServiceClient.GetBindingForEndpoint(endpointConfiguration), ServiceClient.GetEndpointAddress(endpointConfiguration))
-        {
-            this.Endpoint.Name = endpointConfiguration.ToString();
-            ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
-        }
-        
-        public ServiceClient(EndpointConfiguration endpointConfiguration, string remoteAddress) : 
-                base(ServiceClient.GetBindingForEndpoint(endpointConfiguration), new System.ServiceModel.EndpointAddress(remoteAddress))
+        public VerificadorServiceClient(EndpointConfiguration endpointConfiguration) : 
+                base(VerificadorServiceClient.GetBindingForEndpoint(endpointConfiguration), VerificadorServiceClient.GetEndpointAddress(endpointConfiguration))
         {
             this.Endpoint.Name = endpointConfiguration.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
         
-        public ServiceClient(EndpointConfiguration endpointConfiguration, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(ServiceClient.GetBindingForEndpoint(endpointConfiguration), remoteAddress)
+        public VerificadorServiceClient(EndpointConfiguration endpointConfiguration, string remoteAddress) : 
+                base(VerificadorServiceClient.GetBindingForEndpoint(endpointConfiguration), new System.ServiceModel.EndpointAddress(remoteAddress))
         {
             this.Endpoint.Name = endpointConfiguration.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
         
-        public ServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public VerificadorServiceClient(EndpointConfiguration endpointConfiguration, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(VerificadorServiceClient.GetBindingForEndpoint(endpointConfiguration), remoteAddress)
+        {
+            this.Endpoint.Name = endpointConfiguration.ToString();
+            ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
+        }
+        
+        public VerificadorServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress)
         {
         }
@@ -441,7 +441,7 @@ namespace ServicioVerificador
         
         private static System.ServiceModel.Channels.Binding GetBindingForEndpoint(EndpointConfiguration endpointConfiguration)
         {
-            if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_IService))
+            if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_IVerificadorService))
             {
                 System.ServiceModel.BasicHttpBinding result = new System.ServiceModel.BasicHttpBinding();
                 result.MaxBufferSize = int.MaxValue;
@@ -455,27 +455,27 @@ namespace ServicioVerificador
         
         private static System.ServiceModel.EndpointAddress GetEndpointAddress(EndpointConfiguration endpointConfiguration)
         {
-            if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_IService))
+            if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_IVerificadorService))
             {
-                return new System.ServiceModel.EndpointAddress("http://localhost:62854/Service.svc");
+                return new System.ServiceModel.EndpointAddress("http://localhost:50893/VerificadorService.svc");
             }
             throw new System.InvalidOperationException(string.Format("No se pudo encontrar un punto de conexión con el nombre \"{0}\".", endpointConfiguration));
         }
         
         private static System.ServiceModel.Channels.Binding GetDefaultBinding()
         {
-            return ServiceClient.GetBindingForEndpoint(EndpointConfiguration.BasicHttpBinding_IService);
+            return VerificadorServiceClient.GetBindingForEndpoint(EndpointConfiguration.BasicHttpBinding_IVerificadorService);
         }
         
         private static System.ServiceModel.EndpointAddress GetDefaultEndpointAddress()
         {
-            return ServiceClient.GetEndpointAddress(EndpointConfiguration.BasicHttpBinding_IService);
+            return VerificadorServiceClient.GetEndpointAddress(EndpointConfiguration.BasicHttpBinding_IVerificadorService);
         }
         
         public enum EndpointConfiguration
         {
             
-            BasicHttpBinding_IService,
+            BasicHttpBinding_IVerificadorService,
         }
     }
 }

@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+Autenticacion/
+Verificador/WCFServiceVerificador/
+SIM1/WCFServicioVentas/App_Data/*.txt
