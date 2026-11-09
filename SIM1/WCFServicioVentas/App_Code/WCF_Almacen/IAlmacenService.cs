@@ -1,10 +1,11 @@
-﻿using System.ServiceModel;
+﻿using Entities;
+using System.ServiceModel;
 
 [ServiceContract]
 public interface IAlmacenService
 {
     [OperationContract]
-    RespuestaAlmacen MantenimientoProducto(
+    RespuestaServicio MantenimientoProducto(
         int tipoTransaccion,
         string numeroProducto,
         string nombreProducto,

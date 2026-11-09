@@ -1,10 +1,11 @@
 ﻿using BLL;
+using Entities;
 using System;
 using System.Globalization;
 
 public class AlmacenService : IAlmacenService
 {
-    public RespuestaAlmacen MantenimientoProducto(
+    public RespuestaServicio MantenimientoProducto(
         int tipoTransaccion,
         string numeroProducto,
         string nombreProducto,
@@ -24,7 +25,7 @@ public class AlmacenService : IAlmacenService
 
         if (!socket.Conectar())
         {
-            return new RespuestaAlmacen
+            return new RespuestaServicio
             {
                 Resultado = false,
                 Mensaje = "No se pudo conectar con Almacén."
@@ -39,7 +40,7 @@ public class AlmacenService : IAlmacenService
     "EXITOSO",
     StringComparison.OrdinalIgnoreCase);
 
-            return new RespuestaAlmacen
+            return new RespuestaServicio
             {
                 Resultado = exitoso,
                 Mensaje = exitoso

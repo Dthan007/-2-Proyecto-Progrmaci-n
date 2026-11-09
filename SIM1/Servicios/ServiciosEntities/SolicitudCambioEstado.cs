@@ -1,4 +1,4 @@
-﻿using System.Runtime.Serialization;
+﻿/*using System.Runtime.Serialization;
 
 namespace Entities
 {
@@ -11,4 +11,4 @@ namespace Entities
         [DataMember]
         public string Estado { get; set; }
     }
-}
+}*/

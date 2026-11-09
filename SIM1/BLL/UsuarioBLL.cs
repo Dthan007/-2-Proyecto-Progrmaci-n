@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Security.Cryptography;
 using Entities;
 using MongoDB.Driver;
@@ -241,4 +241,4 @@ namespace BLL
             return new RespuestaServicio { Resultado = false, Mensaje = mensaje };
         }
     }
-}
+}*/

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿/*using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace BLL
@@ -37,4 +37,4 @@ namespace BLL
                 && valor.Any(c => !char.IsLetterOrDigit(c) && !char.IsWhiteSpace(c));
         }
     }
-}
+}*/
