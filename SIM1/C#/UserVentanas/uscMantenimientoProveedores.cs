@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace Sistema_de_Ventas_y_Distribución.UserVentanas
+﻿namespace Sistema_de_Ventas_y_Distribución.UserVentanas
 {
     public partial class uscMantenimientoProveedores : UserControl
     {
@@ -13,31 +11,59 @@ namespace Sistema_de_Ventas_y_Distribución.UserVentanas
         {
             int tipoTransaccion = cmbTipoTransaccion.SelectedIndex;
             string idJuridica = txtIDjuridica.Text;
-            string nombreproveedor = txtNombre.Text;
+            string nombreProveedor = txtNombre.Text;
             string nombreContacto = txtNomContacto.Text;
             string telefono = txtTelefono.Text;
             string correo = txtCorreo.Text;
             int estado = cmbEstado.SelectedIndex;
 
-            BLL.ProveedorServiceBLL proveedorBLL = new BLL.ProveedorServiceBLL();
+            var cliente = new WCFServicioProveedorReference.WCFServicioProveedorClient();
 
-            var respuesta = proveedorBLL.MantenimientoProveedores(
-                tipoTransaccion,
-                idJuridica,
-                nombreproveedor,
-                nombreContacto,
-                telefono,
-                correo,
-                estado
-            );
-            MessageBox.Show(
-                respuesta.Mensaje,
-                "Respuesta del Servidor",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
-            LimpiarCampos();
+            try
+            {
+                var proveedor = new WCFServicioProveedorReference.Proveedor
+                {
+                    TipoTransaccion = tipoTransaccion,
+                    IdJuridica = idJuridica,
+                    NombreProveedor = nombreProveedor,
+                    NombreContacto = nombreContacto,
+                    Telefono = telefono,
+                    Correo = correo,
+                    Estado = estado
+                };
+
+                var respuesta = cliente.MantenimientoProveedor(proveedor);
+
+                MessageBox.Show(
+                    respuesta.Mensaje,
+                    respuesta.Resultado ? "Operación exitosa" : "Error en la operación",
+                    MessageBoxButtons.OK,
+                    respuesta.Resultado
+                        ? MessageBoxIcon.Information
+                        : MessageBoxIcon.Error
+                );
+
+                if (respuesta.Resultado)
+                {
+                    LimpiarCampos();
+                }
+
+                cliente.Close();
+            }
+            catch (Exception ex)
+            {
+                cliente.Abort();
+
+                MessageBox.Show(
+                    "Ocurrió un error al procesar la solicitud: " + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
         }
+
+
 
         public void LimpiarCampos()
         {

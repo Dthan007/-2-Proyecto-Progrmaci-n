@@ -7,15 +7,83 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProveedorServiceReference
+namespace WCFServicioProductoReference
 {
     using System.Runtime.Serialization;
     
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RespuestaAlmacen", Namespace="http://schemas.datacontract.org/2004/07/")]
-    public partial class RespuestaAlmacen : object
+    [System.Runtime.Serialization.DataContractAttribute(Name="Producto", Namespace="http://schemas.datacontract.org/2004/07/ServiciosEntities.Almacen.WCFServiciosVen" +
+        "tas")]
+    public partial class Producto : object
+    {
+        
+        private string NombreProductoField;
+        
+        private string NumeroProductoField;
+        
+        private double PrecioField;
+        
+        private int TipoTransaccionField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NombreProducto
+        {
+            get
+            {
+                return this.NombreProductoField;
+            }
+            set
+            {
+                this.NombreProductoField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NumeroProducto
+        {
+            get
+            {
+                return this.NumeroProductoField;
+            }
+            set
+            {
+                this.NumeroProductoField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double Precio
+        {
+            get
+            {
+                return this.PrecioField;
+            }
+            set
+            {
+                this.PrecioField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int TipoTransaccion
+        {
+            get
+            {
+                return this.TipoTransaccionField;
+            }
+            set
+            {
+                this.TipoTransaccionField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RespuestaServicio", Namespace="http://schemas.datacontract.org/2004/07/Entities")]
+    public partial class RespuestaServicio : object
     {
         
         private string MensajeField;
@@ -50,22 +118,22 @@ namespace ProveedorServiceReference
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ProveedorServiceReference.IAlmacenProveedor")]
-    public interface IAlmacenProveedor
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="WCFServicioProductoReference.IWCFServicioProducto")]
+    public interface IWCFServicioProducto
     {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAlmacenProveedor/MantenimientoProveedor", ReplyAction="http://tempuri.org/IAlmacenProveedor/MantenimientoProveedorResponse")]
-        ProveedorServiceReference.RespuestaAlmacen MantenimientoProveedor(int tipoTransaccion, string IDjuridica, string nombreProveedor, string nombreContacto, string telefono, string correo, int estado);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWCFServicioProducto/MantenimientoProducto", ReplyAction="http://tempuri.org/IWCFServicioProducto/MantenimientoProductoResponse")]
+        WCFServicioProductoReference.RespuestaServicio MantenimientoProducto(WCFServicioProductoReference.Producto producto);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    public interface IAlmacenProveedorChannel : ProveedorServiceReference.IAlmacenProveedor, System.ServiceModel.IClientChannel
+    public interface IWCFServicioProductoChannel : WCFServicioProductoReference.IWCFServicioProducto, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    public partial class AlmacenProveedorClient : System.ServiceModel.ClientBase<ProveedorServiceReference.IAlmacenProveedor>, ProveedorServiceReference.IAlmacenProveedor
+    public partial class WCFServicioProductoClient : System.ServiceModel.ClientBase<WCFServicioProductoReference.IWCFServicioProducto>, WCFServicioProductoReference.IWCFServicioProducto
     {
         
         /// <summary>
@@ -75,42 +143,42 @@ namespace ProveedorServiceReference
         /// <param name="clientCredentials">Credenciales de cliente</param>
         static partial void ConfigureEndpoint(System.ServiceModel.Description.ServiceEndpoint serviceEndpoint, System.ServiceModel.Description.ClientCredentials clientCredentials);
         
-        public AlmacenProveedorClient() : 
-                base(AlmacenProveedorClient.GetDefaultBinding(), AlmacenProveedorClient.GetDefaultEndpointAddress())
+        public WCFServicioProductoClient() : 
+                base(WCFServicioProductoClient.GetDefaultBinding(), WCFServicioProductoClient.GetDefaultEndpointAddress())
         {
-            this.Endpoint.Name = EndpointConfiguration.BasicHttpBinding_IAlmacenProveedor.ToString();
+            this.Endpoint.Name = EndpointConfiguration.BasicHttpBinding_IWCFServicioProducto.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
         
-        public AlmacenProveedorClient(EndpointConfiguration endpointConfiguration) : 
-                base(AlmacenProveedorClient.GetBindingForEndpoint(endpointConfiguration), AlmacenProveedorClient.GetEndpointAddress(endpointConfiguration))
-        {
-            this.Endpoint.Name = endpointConfiguration.ToString();
-            ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
-        }
-        
-        public AlmacenProveedorClient(EndpointConfiguration endpointConfiguration, string remoteAddress) : 
-                base(AlmacenProveedorClient.GetBindingForEndpoint(endpointConfiguration), new System.ServiceModel.EndpointAddress(remoteAddress))
+        public WCFServicioProductoClient(EndpointConfiguration endpointConfiguration) : 
+                base(WCFServicioProductoClient.GetBindingForEndpoint(endpointConfiguration), WCFServicioProductoClient.GetEndpointAddress(endpointConfiguration))
         {
             this.Endpoint.Name = endpointConfiguration.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
         
-        public AlmacenProveedorClient(EndpointConfiguration endpointConfiguration, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(AlmacenProveedorClient.GetBindingForEndpoint(endpointConfiguration), remoteAddress)
+        public WCFServicioProductoClient(EndpointConfiguration endpointConfiguration, string remoteAddress) : 
+                base(WCFServicioProductoClient.GetBindingForEndpoint(endpointConfiguration), new System.ServiceModel.EndpointAddress(remoteAddress))
         {
             this.Endpoint.Name = endpointConfiguration.ToString();
             ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
         }
         
-        public AlmacenProveedorClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public WCFServicioProductoClient(EndpointConfiguration endpointConfiguration, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(WCFServicioProductoClient.GetBindingForEndpoint(endpointConfiguration), remoteAddress)
+        {
+            this.Endpoint.Name = endpointConfiguration.ToString();
+            ConfigureEndpoint(this.Endpoint, this.ClientCredentials);
+        }
+        
+        public WCFServicioProductoClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress)
         {
         }
         
-        public ProveedorServiceReference.RespuestaAlmacen MantenimientoProveedor(int tipoTransaccion, string IDjuridica, string nombreProveedor, string nombreContacto, string telefono, string correo, int estado)
+        public WCFServicioProductoReference.RespuestaServicio MantenimientoProducto(WCFServicioProductoReference.Producto producto)
         {
-            return base.Channel.MantenimientoProveedor(tipoTransaccion, IDjuridica, nombreProveedor, nombreContacto, telefono, correo, estado);
+            return base.Channel.MantenimientoProducto(producto);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()
@@ -127,7 +195,7 @@ namespace ProveedorServiceReference
         
         private static System.ServiceModel.Channels.Binding GetBindingForEndpoint(EndpointConfiguration endpointConfiguration)
         {
-            if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_IAlmacenProveedor))
+            if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_IWCFServicioProducto))
             {
                 System.ServiceModel.BasicHttpBinding result = new System.ServiceModel.BasicHttpBinding();
                 result.MaxBufferSize = int.MaxValue;
@@ -141,27 +209,27 @@ namespace ProveedorServiceReference
         
         private static System.ServiceModel.EndpointAddress GetEndpointAddress(EndpointConfiguration endpointConfiguration)
         {
-            if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_IAlmacenProveedor))
+            if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_IWCFServicioProducto))
             {
-                return new System.ServiceModel.EndpointAddress("http://localhost:50893/AlmacenProveedor.svc");
+                return new System.ServiceModel.EndpointAddress("http://localhost:50893/WCFServicioProducto.svc");
             }
             throw new System.InvalidOperationException(string.Format("No se pudo encontrar un punto de conexión con el nombre \"{0}\".", endpointConfiguration));
         }
         
         private static System.ServiceModel.Channels.Binding GetDefaultBinding()
         {
-            return AlmacenProveedorClient.GetBindingForEndpoint(EndpointConfiguration.BasicHttpBinding_IAlmacenProveedor);
+            return WCFServicioProductoClient.GetBindingForEndpoint(EndpointConfiguration.BasicHttpBinding_IWCFServicioProducto);
         }
         
         private static System.ServiceModel.EndpointAddress GetDefaultEndpointAddress()
         {
-            return AlmacenProveedorClient.GetEndpointAddress(EndpointConfiguration.BasicHttpBinding_IAlmacenProveedor);
+            return WCFServicioProductoClient.GetEndpointAddress(EndpointConfiguration.BasicHttpBinding_IWCFServicioProducto);
         }
         
         public enum EndpointConfiguration
         {
             
-            BasicHttpBinding_IAlmacenProveedor,
+            BasicHttpBinding_IWCFServicioProducto,
         }
     }
 }

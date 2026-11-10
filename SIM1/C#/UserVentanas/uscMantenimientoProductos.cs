@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 
+
 namespace Sistema_de_Ventas_y_Distribución
 {
     public partial class uscMantenimientoProductos : UserControl
@@ -24,23 +25,48 @@ namespace Sistema_de_Ventas_y_Distribución
                 MessageBox.Show("El precio no es válido.");
                 return;
             }
-            
-            BLL.AlmacenServiceBLL productoBLL = new BLL.AlmacenServiceBLL();
 
-            var respuesta = productoBLL.MantenimientoProducto(
-                tipoTransaccion,
-                numeroProducto,
-                nombreProducto,
-                precio
-            );
+            var cliente = new WCFServicioProductoReference.WCFServicioProductoClient();
 
-            MessageBox.Show(
-                respuesta.Mensaje,
-                "Respuesta del Servidor",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
-            LimpiarCampos();
+            try
+            {
+                var producto = new WCFServicioProductoReference.Producto
+                {
+                    TipoTransaccion = tipoTransaccion,
+                    NumeroProducto = numeroProducto,
+                    NombreProducto = nombreProducto,
+                    Precio = precio
+                };
+
+                var respuesta = cliente.MantenimientoProducto(producto);
+
+                MessageBox.Show(
+                    respuesta.Mensaje,
+                    respuesta.Resultado ? "Operación exitosa" : "Error en la operación",
+                    MessageBoxButtons.OK,
+                    respuesta.Resultado
+                        ? MessageBoxIcon.Information
+                        : MessageBoxIcon.Error
+                );
+
+                if (respuesta.Resultado)
+                {
+                    LimpiarCampos();
+                }
+
+                cliente.Close();
+            }
+            catch (Exception ex)
+            {
+                cliente.Abort();
+
+                MessageBox.Show(
+                    "Error al comunicarse con el servicio WCF: " + ex.Message,
+                    "Error de comunicación",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
         }//btnAceptar_Click().
 
         public void LimpiarCampos()

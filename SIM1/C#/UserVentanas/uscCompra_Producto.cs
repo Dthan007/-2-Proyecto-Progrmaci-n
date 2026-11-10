@@ -9,21 +9,55 @@
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            string trama =
-                "COMPRA|" +
-                cmbTransaccion.SelectedIndex + "|" +
-                txtIngreso.Text + "|" +
-                txtCompra.Text + "|" +
-                txtJuridica.Text + "|" +
-                txtNoProducto.Text + "|" +
-                txtCantidad.Text;
+            int tipoTransaccion = cmbTransaccion.SelectedIndex;
+            string ingreso = txtIngreso.Text;
+            string compra_ = txtCompra.Text;
+            string juridica = txtJuridica.Text;
+            string noProducto = txtNoProducto.Text;
+            string cantidad = txtCantidad.Text;
 
-            BLL.EnviarConsulta compraProveedorBLL = new BLL.EnviarConsulta();
-            string respuesta = compraProveedorBLL.ProcesarElemento(trama);
+            var cliente = new WCFServicioCompraReference.WCFServicioCompraClient();
 
-            MessageBox.Show(respuesta, "Respuesta del Servidor", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try 
+            {
+                var compra = new WCFServicioCompraReference.Compra
+                {
+                    TipoTransaccion = tipoTransaccion,
+                    Ingreso = ingreso,
+                    Compra_ = compra_,
+                    Juridica = juridica,
+                    NoProducto = noProducto,
+                    Cantidad = cantidad
+                };
+                    
+                var respuesta = cliente.MantenimientoCompra(compra);
 
-            LimpiarCampos();
+                MessageBox.Show(
+                    respuesta.Mensaje,
+                    respuesta.Resultado ? "Operación exitosa" : "Error en la operación",
+                    MessageBoxButtons.OK,
+                    respuesta.Resultado
+                        ? MessageBoxIcon.Information
+                        : MessageBoxIcon.Error
+                );
+                if (respuesta.Resultado)
+                {
+                    LimpiarCampos();
+                }
+
+                cliente.Close();
+
+            }
+            catch (Exception ex)
+            {
+                cliente.Abort();
+                MessageBox.Show(
+                    "Ocurrió un error al procesar la solicitud: " + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
         }
 
         public void LimpiarCampos()

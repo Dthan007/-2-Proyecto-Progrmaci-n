@@ -1,3 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" 
-    Service="AlmacenProveedor" 
-    CodeBehind="AlmacenProveedor.cs" %>
