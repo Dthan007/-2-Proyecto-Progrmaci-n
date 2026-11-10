@@ -10,6 +10,9 @@
     <Compile Update="UserVentanas\uscCompras.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="UserVentanas\uscLogin.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="UserVentanas\uscMantenimientoProductos.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -17,6 +20,12 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="UserVentanas\uscMantenimientoClientes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UserVentanas\uscModificarEstado.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UserVentanas\uscRegistrarUsuario.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>
