@@ -31,4 +31,10 @@ public class AutenticacionService : IAutenticacionService
 
         return new UsuarioRepositorio(cadena, baseDatos);
     }
+
+    public RespuestaConsultaUsuario ObtenerUsuarioPorIdentificacion(string identificacion)
+    {
+        return new UsuarioBLL(CrearRepositorio())
+            .ObtenerUsuarioPorIdentificacion(identificacion);
+    }
 }

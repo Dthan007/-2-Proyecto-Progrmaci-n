@@ -64,6 +64,7 @@
             btnEnviar.TabIndex = 37;
             btnEnviar.Text = "Enviar";
             btnEnviar.UseVisualStyleBackColor = true;
+            btnEnviar.Click += btnEnviar_Click;
             // 
             // txtPassword
             // 
@@ -261,6 +262,7 @@
             btnCancelar.TabIndex = 40;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
+            btnCancelar.Click += btnCancelar_Click;
             // 
             // btnBuscar
             // 
@@ -272,6 +274,7 @@
             btnBuscar.TabIndex = 64;
             btnBuscar.Text = "Buscar";
             btnBuscar.UseVisualStyleBackColor = true;
+            btnBuscar.Click += btnBuscar_Click;
             // 
             // btnModificar
             // 
@@ -283,6 +286,7 @@
             btnModificar.TabIndex = 65;
             btnModificar.Text = "Modificar";
             btnModificar.UseVisualStyleBackColor = true;
+            btnModificar.Click += btnModificar_Click;
             // 
             // uscRegistrarUsuario
             // 

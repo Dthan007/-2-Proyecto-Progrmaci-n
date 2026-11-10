@@ -46,9 +46,11 @@
     <Compile Include="Almacen\Producto.cs" />
     <Compile Include="Almacen\Proveedor.cs" />
     <Compile Include="DatosUsuario.cs" />
+    <Compile Include="DatosUsuarioConsulta.cs" />
     <Compile Include="ProductoCompra.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RespuestaAutenticacion.cs" />
+    <Compile Include="RespuestaConsultaUsuario.cs" />
     <Compile Include="RespuestaServicio.cs" />
     <Compile Include="SolicitudCambioEstado.cs" />
     <Compile Include="SolicitudCliente.cs" />

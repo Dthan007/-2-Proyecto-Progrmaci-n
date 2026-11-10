@@ -61,28 +61,86 @@ namespace BLL
             return Exito();
         }
 
-        public RespuestaServicio ModificarUsuario(DatosUsuario solicitud) //	Comprueba que el usuario exista y actualiza sus datos
+        public RespuestaServicio ModificarUsuario(DatosUsuario solicitud)
         {
-            string usuario;
-            string contrasena;
+            if (solicitud == null)
+            {
+                return Fallo(MensajeModificar);
+            }
 
-            if (!DatosValidos(solicitud, out usuario, out contrasena))
+            string usuario;
+            string contrasenaNueva = null;
+
+            // Descifrar el nombre de usuario.
+            try
+            {
+                usuario = Cifrado.Descifrar(solicitud.Usuario);
+
+                // La contraseña solamente se descifra si se recibió una nueva.
+                if (!string.IsNullOrWhiteSpace(solicitud.Contrasena))
+                {
+                    contrasenaNueva = Cifrado.Descifrar(solicitud.Contrasena);
+                }
+            }
+            catch (Exception ex) when (
+                ex is FormatException ||
+                ex is CryptographicException ||
+                ex is ArgumentException)
+            {
+                Consola.Error("No se pudieron descifrar las credenciales.", ex);
+                return Fallo(MensajeModificar);
+            }
+
+            // Validar los datos personales.
+            if (!ValidacionesUsuario.EsIdentificacionValida(solicitud.Identificacion) ||
+                !ValidacionesUsuario.EsNombreValido(solicitud.Nombre) ||
+                !ValidacionesUsuario.EsNombreValido(solicitud.PrimerApellido) ||
+                !ValidacionesUsuario.EsNombreValido(solicitud.SegundoApellido) ||
+                !ValidacionesUsuario.EsCorreoValido(solicitud.CorreoElectronico) ||
+                !ValidacionesUsuario.EsUsuarioValido(usuario))
+            {
+                return Fallo(MensajeModificar);
+            }
+
+            // Validar la contraseña solamente si se desea cambiar.
+            if (contrasenaNueva != null &&
+                !ValidacionesUsuario.EsContrasenaValida(contrasenaNueva))
             {
                 return Fallo(MensajeModificar);
             }
 
             try
             {
-                var documento = ConstruirDocumento(solicitud, usuario, contrasena);
+                string identificacion = solicitud.Identificacion.Trim();
 
-                if (repositorio.ObtenerPorIdentificacion(documento.Identificacion) == null || ExisteNombreUsuario(usuario, documento.Identificacion))
+                var existente = repositorio.ObtenerPorIdentificacion(identificacion);
+
+                if (existente == null ||
+                    ExisteNombreUsuario(usuario, identificacion))
                 {
                     return Fallo(MensajeModificar);
                 }
 
+                var documento = new UsuarioDocumento
+                {
+                    Identificacion = identificacion,
+                    Nombre = solicitud.Nombre.Trim(),
+                    PrimerApellido = solicitud.PrimerApellido.Trim(),
+                    SegundoApellido = solicitud.SegundoApellido.Trim(),
+                    CorreoElectronico = solicitud.CorreoElectronico.Trim(),
+
+                    Usuario = Cifrado.Cifrar(usuario),
+
+                    Contrasena = contrasenaNueva != null
+                        ? Cifrado.Cifrar(contrasenaNueva)
+                        : existente.Contrasena
+                };
+
                 repositorio.ActualizarDatos(documento);
             }
-            catch (Exception ex) when (ex is MongoException || ex is TimeoutException)
+            catch (Exception ex) when (
+                ex is MongoException ||
+                ex is TimeoutException)
             {
                 Consola.Error("No se pudo modificar el usuario en MongoDB", ex);
                 return Fallo(MensajeBaseDatos);
@@ -123,6 +181,81 @@ namespace BLL
             }
 
             return Exito();
+        }
+
+        public RespuestaConsultaUsuario ObtenerUsuarioPorIdentificacion(string identificacion)
+        {
+            if (!ValidacionesUsuario.EsIdentificacionValida(identificacion))
+            {
+                return new RespuestaConsultaUsuario
+                {
+                    Resultado = false,
+                    Mensaje = "La identificación no es válida."
+                };
+            }
+
+            try
+            {
+                identificacion = identificacion.Trim();
+
+                var documento = repositorio.ObtenerPorIdentificacion(identificacion);
+
+                if (documento == null)
+                {
+                    return new RespuestaConsultaUsuario
+                    {
+                        Resultado = false,
+                        Mensaje = "No se encontró un usuario con esa identificación."
+                    };
+                }
+
+                string usuario;
+
+                try
+                {
+                    usuario = Cifrado.Descifrar(documento.Usuario);
+                }
+                catch (Exception ex) when (
+                    ex is FormatException ||
+                    ex is CryptographicException ||
+                    ex is ArgumentException)
+                {
+                    Consola.Error("No se pudo descifrar el nombre de usuario.", ex);
+
+                    return new RespuestaConsultaUsuario
+                    {
+                        Resultado = false,
+                        Mensaje = "No se pudieron recuperar los datos del usuario."
+                    };
+                }
+
+                return new RespuestaConsultaUsuario
+                {
+                    Resultado = true,
+                    Mensaje = "Usuario encontrado.",
+                    Usuario = new DatosUsuarioConsulta
+                    {
+                        Identificacion = documento.Identificacion,
+                        Nombre = documento.Nombre,
+                        PrimerApellido = documento.PrimerApellido,
+                        SegundoApellido = documento.SegundoApellido,
+                        CorreoElectronico = documento.CorreoElectronico,
+                        Usuario = usuario
+                    },
+                    Estado = documento.Estado,
+                    Tipo = documento.Tipo
+                };
+            }
+            catch (Exception ex) when (ex is MongoException || ex is TimeoutException)
+            {
+                Consola.Error("No se pudo consultar el usuario en MongoDB.", ex);
+
+                return new RespuestaConsultaUsuario
+                {
+                    Resultado = false,
+                    Mensaje = "No se pudo acceder a la base de datos de usuarios."
+                };
+            }
         }
 
         private bool DatosValidos(DatosUsuario datos, out string usuario, out string contrasena) //Descifra las credenciales y valida los datos recibidos.

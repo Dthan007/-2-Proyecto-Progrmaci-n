@@ -15,4 +15,7 @@ public interface IAutenticacionService
 
     [OperationContract]
     RespuestaServicio CambiarEstadoUsuario(SolicitudCambioEstado solicitud); //Activar o desactivar una cuenta.
+
+    [OperationContract]
+    RespuestaConsultaUsuario ObtenerUsuarioPorIdentificacion(string identificacion);
 }

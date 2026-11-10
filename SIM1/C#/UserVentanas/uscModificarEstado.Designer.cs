@@ -54,6 +54,7 @@
             btnBuscar.TabIndex = 67;
             btnBuscar.Text = "Buscar";
             btnBuscar.UseVisualStyleBackColor = true;
+            btnBuscar.Click += btnBuscar_Click;
             // 
             // txtIdentificacion
             // 
@@ -169,6 +170,7 @@
             btnCancelar.TabIndex = 78;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
+            btnCancelar.Click += btnCancelar_Click;
             // 
             // btnEnviar
             // 
@@ -180,6 +182,7 @@
             btnEnviar.TabIndex = 77;
             btnEnviar.Text = "Enviar";
             btnEnviar.UseVisualStyleBackColor = true;
+            btnEnviar.Click += btnEnviar_Click;
             // 
             // uscModificarEstado
             // 

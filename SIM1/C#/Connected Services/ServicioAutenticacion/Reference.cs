@@ -67,6 +67,7 @@ namespace ServicioAutenticacion
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RespuestaServicio", Namespace="http://schemas.datacontract.org/2004/07/Entities")]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(ServicioAutenticacion.RespuestaConsultaUsuario))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(ServicioAutenticacion.RespuestaAutenticacion))]
     public partial class RespuestaServicio : object
     {
@@ -104,6 +105,58 @@ namespace ServicioAutenticacion
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RespuestaConsultaUsuario", Namespace="http://schemas.datacontract.org/2004/07/Entities")]
+    public partial class RespuestaConsultaUsuario : ServicioAutenticacion.RespuestaServicio
+    {
+        
+        private string EstadoField;
+        
+        private int TipoField;
+        
+        private ServicioAutenticacion.DatosUsuarioConsulta UsuarioField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Estado
+        {
+            get
+            {
+                return this.EstadoField;
+            }
+            set
+            {
+                this.EstadoField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Tipo
+        {
+            get
+            {
+                return this.TipoField;
+            }
+            set
+            {
+                this.TipoField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ServicioAutenticacion.DatosUsuarioConsulta Usuario
+        {
+            get
+            {
+                return this.UsuarioField;
+            }
+            set
+            {
+                this.UsuarioField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RespuestaAutenticacion", Namespace="http://schemas.datacontract.org/2004/07/Entities")]
     public partial class RespuestaAutenticacion : ServicioAutenticacion.RespuestaServicio
     {
@@ -135,6 +188,103 @@ namespace ServicioAutenticacion
             set
             {
                 this.TipoField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DatosUsuarioConsulta", Namespace="http://schemas.datacontract.org/2004/07/Entities")]
+    public partial class DatosUsuarioConsulta : object
+    {
+        
+        private string CorreoElectronicoField;
+        
+        private string IdentificacionField;
+        
+        private string NombreField;
+        
+        private string PrimerApellidoField;
+        
+        private string SegundoApellidoField;
+        
+        private string UsuarioField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CorreoElectronico
+        {
+            get
+            {
+                return this.CorreoElectronicoField;
+            }
+            set
+            {
+                this.CorreoElectronicoField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Identificacion
+        {
+            get
+            {
+                return this.IdentificacionField;
+            }
+            set
+            {
+                this.IdentificacionField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Nombre
+        {
+            get
+            {
+                return this.NombreField;
+            }
+            set
+            {
+                this.NombreField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PrimerApellido
+        {
+            get
+            {
+                return this.PrimerApellidoField;
+            }
+            set
+            {
+                this.PrimerApellidoField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SegundoApellido
+        {
+            get
+            {
+                return this.SegundoApellidoField;
+            }
+            set
+            {
+                this.SegundoApellidoField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Usuario
+        {
+            get
+            {
+                return this.UsuarioField;
+            }
+            set
+            {
+                this.UsuarioField = value;
             }
         }
     }
@@ -342,6 +492,9 @@ namespace ServicioAutenticacion
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticacionService/CambiarEstadoUsuario", ReplyAction="http://tempuri.org/IAutenticacionService/CambiarEstadoUsuarioResponse")]
         ServicioAutenticacion.RespuestaServicio CambiarEstadoUsuario(ServicioAutenticacion.SolicitudCambioEstado solicitud);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutenticacionService/ObtenerUsuarioPorIdentificacion", ReplyAction="http://tempuri.org/IAutenticacionService/ObtenerUsuarioPorIdentificacionResponse")]
+        ServicioAutenticacion.RespuestaConsultaUsuario ObtenerUsuarioPorIdentificacion(string identificacion);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
@@ -412,6 +565,11 @@ namespace ServicioAutenticacion
         public ServicioAutenticacion.RespuestaServicio CambiarEstadoUsuario(ServicioAutenticacion.SolicitudCambioEstado solicitud)
         {
             return base.Channel.CambiarEstadoUsuario(solicitud);
+        }
+        
+        public ServicioAutenticacion.RespuestaConsultaUsuario ObtenerUsuarioPorIdentificacion(string identificacion)
+        {
+            return base.Channel.ObtenerUsuarioPorIdentificacion(identificacion);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

@@ -73,5 +73,17 @@ namespace Sistema_de_Ventas_y_Distribución
                 Mensaje = "No se pudo comunicar con el servicio de autenticación. Verifique que esté en ejecución."
             };
         }
+
+        public static ServicioAutenticacion.RespuestaConsultaUsuario ObtenerUsuarioPorIdentificacion(string identificacion)
+        {
+            return Ejecutar(
+                cliente => cliente.ObtenerUsuarioPorIdentificacion(identificacion),
+                () => new ServicioAutenticacion.RespuestaConsultaUsuario
+                {
+                    Resultado = false,
+                    Mensaje = "No se pudo consultar el usuario."
+                }
+            );
+        }
     }
 }
