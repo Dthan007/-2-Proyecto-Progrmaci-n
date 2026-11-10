@@ -1,4 +1,4 @@
-﻿/*using System.Configuration;
+﻿using System.Configuration;
 using BLL;
 using Entities;
 
@@ -31,4 +31,4 @@ public class AutenticacionService : IAutenticacionService
 
         return new UsuarioRepositorio(cadena, baseDatos);
     }
-}*/
+}

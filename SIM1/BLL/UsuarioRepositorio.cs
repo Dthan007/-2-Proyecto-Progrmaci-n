@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
@@ -10,6 +10,7 @@ namespace BLL
 {
     public class UsuarioRepositorio
     {
+        //conexion a mongo
         private static MongoClient cliente;
         private static readonly object candado = new object();
 
@@ -25,10 +26,10 @@ namespace BLL
                 }
             }
 
-            coleccion = cliente.GetDatabase(baseDatos).GetCollection<UsuarioDocumento>("usuarios");
+            coleccion = cliente.GetDatabase(baseDatos).GetCollection<UsuarioDocumento>("usuarios"); //constructor
         }
 
-        public List<UsuarioDocumento> ObtenerActivosPorTipo(int tipo)
+        public List<UsuarioDocumento> ObtenerActivosPorTipo(int tipo) //consulta usuarios activos x tipo
         {
             return coleccion.Find(u => u.Tipo == tipo && u.Estado == "activo").ToList();
         }
@@ -69,4 +70,3 @@ namespace BLL
         }
     }
 }
-*/

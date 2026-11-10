@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +12,8 @@ namespace Entities
     {
         [DataMember]
         public string Id { get; set;  }
+
+        [DataMember]
+        public int Tipo { get; set; }
     }
 }
-*/

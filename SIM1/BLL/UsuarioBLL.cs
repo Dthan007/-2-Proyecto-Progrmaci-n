@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using System.Security.Cryptography;
 using Entities;
 using MongoDB.Driver;
@@ -19,7 +19,7 @@ namespace BLL
             this.repositorio = repositorio;
         }
 
-        public RespuestaServicio CrearUsuario(SolicitudCrearUsuario solicitud)
+        public RespuestaServicio CrearUsuario(SolicitudCrearUsuario solicitud) //	Valida que no exista la identificación ni el nombre de usuario y registra la cuenta.
         {
             string usuario;
             string contrasena;
@@ -61,7 +61,7 @@ namespace BLL
             return Exito();
         }
 
-        public RespuestaServicio ModificarUsuario(DatosUsuario solicitud)
+        public RespuestaServicio ModificarUsuario(DatosUsuario solicitud) //	Comprueba que el usuario exista y actualiza sus datos
         {
             string usuario;
             string contrasena;
@@ -91,7 +91,7 @@ namespace BLL
             return Exito();
         }
 
-        public RespuestaServicio CambiarEstado(SolicitudCambioEstado solicitud)
+        public RespuestaServicio CambiarEstado(SolicitudCambioEstado solicitud) //	Comprueba que el usuario exista y cambia su estado a activo o inactivo.
         {
             if (solicitud == null || !ValidacionesUsuario.EsIdentificacionValida(solicitud.Identificacion))
             {
@@ -125,7 +125,7 @@ namespace BLL
             return Exito();
         }
 
-        private bool DatosValidos(DatosUsuario datos, out string usuario, out string contrasena)
+        private bool DatosValidos(DatosUsuario datos, out string usuario, out string contrasena) //Descifra las credenciales y valida los datos recibidos.
         {
             usuario = null;
             contrasena = null;
@@ -184,7 +184,7 @@ namespace BLL
             return true;
         }
 
-        private UsuarioDocumento ConstruirDocumento(DatosUsuario datos, string usuario, string contrasena)
+        private UsuarioDocumento ConstruirDocumento(DatosUsuario datos, string usuario, string contrasena) //Convierte los datos de la solicitud en un UsuarioDocumento
         {
             return new UsuarioDocumento
             {
@@ -198,7 +198,7 @@ namespace BLL
             };
         }
 
-        private bool ExisteNombreUsuario(string usuario, string identificacionExcluida)
+        private bool ExisteNombreUsuario(string usuario, string identificacionExcluida) //Evita que dos usuarios compartan el mismo nombre de usuario.
         {
             foreach (var existente in repositorio.ObtenerTodos())
             {
@@ -241,4 +241,4 @@ namespace BLL
             return new RespuestaServicio { Resultado = false, Mensaje = mensaje };
         }
     }
-}*/
+}

@@ -1,4 +1,4 @@
-﻿/*
+﻿
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
@@ -52,4 +52,4 @@ namespace BLL
         [BsonElement("tipo")]
         public int Tipo { get; set; }
     }
-}*/
+}
