@@ -8,12 +8,26 @@ namespace Sistema_de_Ventas_y_Distribución
         // 0 = Sin sesión, 1 = Administrador, 2 = Cliente
         private int tipoUsuarioActual = 0;
 
+        //Desactivar Login
+        private static readonly bool loginHabilitado = false;
+
         public frmCentral()
         {
             InitializeComponent();
 
             // Ocultar todas las opciones del sistema
             OcultarMenu();
+
+            if (!loginHabilitado)
+            {
+                inicioAdmin();
+
+                cerrarSesiónToolStripMenuItem.Visible = false;
+                cerrarSesiónToolStripMenuItem.Enabled = false;
+
+                mostrarpantalla();
+                return;
+            }
 
             // Mostrar únicamente Login
             loginToolStripMenuItem.Visible = true;
